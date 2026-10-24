@@ -1,0 +1,5 @@
+`include "seq_list.sv"
+`include "soc_top_stimulus.svh"
+`include "soc_top_test_base.svh"
+//`include "soc_top_reg_test.svh"
+`include "soc_top_test_lib.svh"

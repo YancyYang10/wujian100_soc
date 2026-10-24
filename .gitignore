@@ -1,0 +1,84 @@
+# ---------------------------------------------------------------------------
+# Wujian100 UVM 验证工程 .gitignore
+# 只忽略编译/仿真/回归产生的中间文件，源码与配置（.v/.sv/.svh/.c/.h/.s/
+# *.f/*.tcl/Makefile/*.cfg/*.lcf/case.lst/doc/*.md）全部保留。
+# ---------------------------------------------------------------------------
+
+# --- VCS / Verdi 编译产物 ---
+csrc/
+*.daidir/
+*.vdb/
+*.vpd/
+simv
+simv_*
+simv.*
+ucli.key
+vc_hdrs.h
+hierarchy.txt
+stack.info.*
+*.c_code_*/
+*.so
+*.o
+*.d
+*.a
+
+# --- 仿真输出 ---
+out/
+out_*/
+*.log
+# 调试日志文档需要保留
+!doc/debug.log
+
+# --- 波形 ---
+*.fsdb
+*.vcd
+*.fst
+*.shm
+*.trn
+novas.fsdb
+novas_dump.log
+tr_db.log
+rtl_gpr.log
+
+# --- 回归结果 ---
+regress_results_*/
+run_case.report
+
+# --- 覆盖率 ---
+*.vdb/
+coverage_report/
+cm.log
+
+# --- C 用例编译产物 ---
+*.pat
+*.elf
+*.hex
+*.bin
+*.map
+*.mem
+*.vmem
+test_start.so
+
+# --- fsdb / wave-mcp 调试缓存 ---
+fsdbqryLog/
+fsdb2vcdLog/
+.wave-mcp/
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# --- 编辑器 / 系统 ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- 手工备份（如需入库请 git add -f）---
+backup/

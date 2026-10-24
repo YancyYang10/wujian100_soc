@@ -1,6 +1,34 @@
 # wujian100_uvm
 使用github上开源基于UVM的ahb_agent/apb_agent，搭建无剑100的UVM验证环境，供大家学习；有兴趣的同学也可以一起加入完善这个验证环境。
 
+# 验证环境（verify/st，UVM 1.2）
+
+新的 UVM 1.2 验证环境位于 `verify/st`，支持 20 条回归用例（C 用例 + AHB VIP smoke + 结构冒烟）。
+
+## 快速开始
+```bash
+source /eda_tools/synopsys/.bashrc.synopsys
+cd verify/st
+source ./dv.cshrc
+cd sim
+make all                                   # 默认 timer 冒烟
+make all mode=nocpu tc=soc_top_smoke_test  # AHB VIP 冒烟
+```
+
+## 回归
+```bash
+cd verify/st/sim
+python3 ~/script/regression_v1.0/regr_run.py -c regress.cfg -l case.lst -j 4
+# 覆盖率
+python3 ~/script/regression_v1.0/regr_run.py -c regress.cfg -l case.lst -j 1 --coverage --urg
+```
+
+## 文档
+- `doc/wujian_verify.md`：环境、目录、命令与覆盖率口径
+- `doc/wujian_verification_report.md`：验证报告（回归、覆盖率、缺陷、风险、收敛分析）
+- `doc/debug.log`：调试过程与根因记录
+- `doc/coverage_waiver.md`：端口覆盖率 waive 清单
+
 # 微信公众号
 相关环境介绍可以扫码关注我的微信公众号查看（带SVT VIP的UVM验证环境介绍）。
 <img src="https://github.com/IC-Design-Verify/wujian100_uvm/blob/main/images/wxgzh.jpg" width="485" height="640" alt="wxgzh" align=center/>

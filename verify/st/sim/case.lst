@@ -1,0 +1,40 @@
+# Wujian100 verify/st C-case regression list
+# Format: tc=<UVM test> mode=<mode> sc=<C case> times=<n> [seed=<n>] [stim=<name>]
+# seed is omitted on purpose: regr_run.py generates a random seed per run.
+# Add seed=<n> back to a single line when reproducing a failure.
+#
+# HW stimulus is selected at runtime with stim=<name> (+HW_STIM), implemented
+# by tc/soc_top_stimulus.svh. All CPU-driven cases share one mode=soc_test
+# build; no more per-IP compile modes are needed for the regression.
+#   stim values: gpio | pwm | spi | i2c | uart | map | had   (omit = no extra hw)
+# struct covers the empty AHB_HS/GATE placeholders.
+#
+# Ordered by measured simulation time (longest first).
+
+# --- longest simulations first ---
+tc=soc_top_for_c_case_test mode=soc_test sc=wdt/wdt_test.c        times=1
+tc=soc_top_for_c_case_test mode=soc_test sc=usi_uart/usi_uart_test.c times=1 stim=uart
+tc=soc_top_for_c_case_test mode=soc_test sc=usi_spi/usi_spi_test.c times=1 stim=spi
+tc=soc_top_for_c_case_test mode=soc_test sc=usi_i2c/usi_i2c_test.c times=1 stim=i2c
+tc=soc_top_for_c_case_test mode=soc_test sc=usi_i2c_slave/usi_i2c_slave_test.c times=1 stim=i2c
+tc=soc_top_for_c_case_test mode=soc_test sc=usi_i2c_slave_tx/usi_i2c_slave_tx_test.c times=1 stim=i2c
+
+# --- CPU + runtime hw stimulus ---
+tc=soc_top_for_c_case_test mode=soc_test sc=timer/timer_test.c    times=1
+tc=soc_top_for_c_case_test mode=soc_test sc=rtc/rtc_test.c        times=1
+tc=soc_top_for_c_case_test mode=soc_test sc=cpu_exception/cpu_exception_test.c times=1
+tc=soc_top_for_c_case_test mode=soc_test sc=dma/dma_test.c        times=1
+tc=soc_top_for_c_case_test mode=soc_test sc=dma_modes/dma_modes_test.c times=1
+tc=soc_top_for_c_case_test mode=soc_test sc=gpio/gpio_test.c      times=1 stim=gpio
+tc=soc_top_for_c_case_test mode=soc_test sc=pwm/pwm_test.c        times=1 stim=pwm
+tc=soc_top_for_c_case_test mode=soc_test sc=pwm_all/pwm_all_test.c times=1
+tc=soc_top_for_c_case_test mode=soc_test sc=addr_map/map_test.c   times=1 stim=map
+tc=soc_top_for_c_case_test mode=soc_test sc=io_pad/io_pad_test.c    times=1 stim=io
+
+# --- HAD / VIP ---
+tc=soc_top_for_c_case_test mode=soc_test sc=had_soc/e902_had_test.c times=1 stim=had
+tc=soc_top_smoke_test mode=nocpu times=1
+
+# --- structural smokes (empty TB placeholders, one struct build) ---
+tc=soc_top_for_c_case_test mode=struct sc=dma/dma_test.c     times=1
+tc=soc_top_for_c_case_test mode=struct sc=timer/timer_test.c times=1
